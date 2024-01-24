@@ -1038,27 +1038,32 @@
     ]
   },
   "packageFolders": {
-    "/Users/jlloyd/.nuget/packages/": {}
+    "C:\\Users\\james\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/jlloyd/RiderProjects/OOPElectronicVotingServer/OOPElectronicVotingServer/OOPElectronicVotingServer.csproj",
+      "projectUniqueName": "C:\\Users\\james\\RiderProjects\\OOPElectronicVotingServer\\OOPElectronicVotingServer\\OOPElectronicVotingServer.csproj",
       "projectName": "OOPElectronicVotingServer",
-      "projectPath": "/Users/jlloyd/RiderProjects/OOPElectronicVotingServer/OOPElectronicVotingServer/OOPElectronicVotingServer.csproj",
-      "packagesPath": "/Users/jlloyd/.nuget/packages/",
-      "outputPath": "/Users/jlloyd/RiderProjects/OOPElectronicVotingServer/OOPElectronicVotingServer/obj/",
+      "projectPath": "C:\\Users\\james\\RiderProjects\\OOPElectronicVotingServer\\OOPElectronicVotingServer\\OOPElectronicVotingServer.csproj",
+      "packagesPath": "C:\\Users\\james\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\james\\RiderProjects\\OOPElectronicVotingServer\\OOPElectronicVotingServer\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/Users/jlloyd/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\james\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "/usr/local/share/dotnet/library-packs": {},
-        "https://api.nuget.org/v3/index.json": {},
-        "https://gaincapital.jfrog.io/gaincapital/api/nuget/nuget/": {}
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
@@ -1112,7 +1117,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100-rc.2.23502.2/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

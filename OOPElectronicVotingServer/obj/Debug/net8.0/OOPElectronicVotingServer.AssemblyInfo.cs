@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OOPElectronicVotingServer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+64eb3eb385f1774968252bc3d41a479b911bb8fd")]
 [assembly: System.Reflection.AssemblyProductAttribute("OOPElectronicVotingServer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OOPElectronicVotingServer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

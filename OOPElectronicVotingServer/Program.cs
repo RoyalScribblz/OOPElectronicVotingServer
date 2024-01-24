@@ -11,12 +11,23 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<VotingDatabase>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "LocalDev", policy =>
+    {
+        policy.SetIsOriginAllowed(origin => new Uri(origin).IsLoopback)
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
 WebApplication app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseCors("LocalDev");
 }              
 
 app.UseHttpsRedirection();
