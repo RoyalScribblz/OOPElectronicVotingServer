@@ -2,8 +2,8 @@ namespace OOPElectronicVotingServer.Database.Dtos;
 
 public sealed record Election
 {
-    public Guid ElectionId { get; set; }
-    public DateTime StartTime { get; set; }
-    public DateTime EndTime { get; set; }
-    public List<Guid> CandidateIds { get; set; } = default!;
+    public required Guid ElectionId { get; set; }
+    public required DateTime StartTime { get; set; }
+    public required DateTime EndTime { get; set; }
+    public required List<Guid> CandidateIds { get; set; }
 }
