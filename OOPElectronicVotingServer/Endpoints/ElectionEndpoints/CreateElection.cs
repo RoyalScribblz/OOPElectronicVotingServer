@@ -6,7 +6,7 @@ namespace OOPElectronicVotingServer.Endpoints.ElectionEndpoints;
 
 public static class CreateElection
 {
-    public static void MapCreateElection(this IEndpointRouteBuilder app) => app.MapPost("/elections", Handler);
+    public static void MapCreateElection(this IEndpointRouteBuilder app) => app.MapPost("/election", Handler);
 
     private static async Task<IResult> Handler(CreateElectionRequest createRequest, VotingDatabase database, CancellationToken cancellationToken)
     {

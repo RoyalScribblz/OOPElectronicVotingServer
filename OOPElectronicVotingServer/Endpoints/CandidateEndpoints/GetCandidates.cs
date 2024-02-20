@@ -21,7 +21,7 @@ public static class GetCandidates
             return TypedResults.NotFound($"Election with id '{electionId}' does not exist.");
         }
 
-        IQueryable<Candidate> candidates = database.Candidates.Where(candidate => election.CandidateIds.Contains(election.ElectionId));
+        IQueryable<Candidate> candidates = database.Candidates.Where(candidate => election.CandidateIds.Contains(candidate.CandidateId));
         
         return TypedResults.Ok(candidates);
     }

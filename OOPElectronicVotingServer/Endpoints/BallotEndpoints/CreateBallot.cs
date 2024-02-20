@@ -6,7 +6,7 @@ namespace OOPElectronicVotingServer.Endpoints.BallotEndpoints;
 
 public static class CreateBallot
 {
-    public static void MapCreateBallot(this IEndpointRouteBuilder app) => app.MapPost("/ballots", Handler);
+    public static void MapCreateBallot(this IEndpointRouteBuilder app) => app.MapPost("/ballot", Handler);
 
     private static async Task<IResult> Handler(CreateBallotRequest createRequest, VotingDatabase database, CancellationToken cancellationToken)
     {

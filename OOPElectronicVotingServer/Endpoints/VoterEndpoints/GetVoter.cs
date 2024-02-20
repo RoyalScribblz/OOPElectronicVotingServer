@@ -5,7 +5,7 @@ namespace OOPElectronicVotingServer.Endpoints.VoterEndpoints;
 
 public static class GetVoter
 {
-    public static void MapGetVoter(this IEndpointRouteBuilder app) => app.MapGet("/voters/{voterId}", Handler);
+    public static void MapGetVoter(this IEndpointRouteBuilder app) => app.MapGet("/voter/{voterId}", Handler);
 
     private static IResult Handler(string voterId, VotingDatabase database, CancellationToken cancellationToken)
     {
