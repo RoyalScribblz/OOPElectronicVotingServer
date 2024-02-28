@@ -14,13 +14,14 @@ public static class CreateCandidate
         {
             CandidateId = Guid.NewGuid(),
             Name = createRequest.Name,
-            ImageUrl = createRequest.ImageUrl
+            ImageUrl = createRequest.ImageUrl,
+            Colour = createRequest.Colour
         };
 
         await database.Candidates.AddAsync(candidate, cancellationToken);
 
         await database.SaveChangesAsync(cancellationToken);
 
-        return TypedResults.Created($"/candidates", candidate);
+        return TypedResults.Created("/candidates", candidate);
     }
 }

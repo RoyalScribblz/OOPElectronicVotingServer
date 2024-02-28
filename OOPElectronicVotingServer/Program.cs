@@ -55,27 +55,31 @@ db.Candidates.AddRange([
     {
         CandidateId = idA,
         Name = "Candidate A",
-        ImageUrl = string.Empty
+        ImageUrl = string.Empty,
+        Colour = "2176ff"
     },
     new Candidate
     {
         CandidateId = idB,
         Name = "Candidate B",
-        ImageUrl = string.Empty
+        ImageUrl = string.Empty,
+        Colour = "ff21cf"
     },
     new Candidate
     {
         CandidateId = idC,
         Name = "Candidate C",
-        ImageUrl = string.Empty
+        ImageUrl = string.Empty,
+        Colour = "ff2121"
     },
 ]);
         
 db.Elections.Add(new Election
 {
     ElectionId = Guid.NewGuid(),
-    StartTime = DateTime.Today.AddDays(-1),
-    EndTime = DateTime.Today.AddDays(1),
+    Name = "Really Cool Election",
+    StartTime = DateTime.Now.AddDays(-1),
+    EndTime = DateTime.Now.AddDays(1),
     CandidateIds = [idA, idB, idC]
         
 });
@@ -89,27 +93,31 @@ db.Candidates.AddRange([
     {
         CandidateId = idD,
         Name = "Candidate D",
-        ImageUrl = string.Empty
+        ImageUrl = string.Empty,
+        Colour = "21ff25"
     },
     new Candidate
     {
         CandidateId = idE,
         Name = "Candidate E",
-        ImageUrl = string.Empty
+        ImageUrl = string.Empty,
+        Colour = "c2fa19"
     },
     new Candidate
     {
         CandidateId = idF,
         Name = "Candidate F",
-        ImageUrl = string.Empty
+        ImageUrl = string.Empty,
+        Colour = "fa5c19"
     },
 ]);
         
 db.Elections.Add(new Election
 {
     ElectionId = Guid.NewGuid(),
-    StartTime = DateTime.Today.AddDays(-1),
-    EndTime = DateTime.Today.AddDays(1),
+    Name = "Another Election",
+    StartTime = DateTime.Now.AddDays(-1),
+    EndTime = DateTime.Now.AddDays(1),
     CandidateIds = [idD, idE, idF]
         
 });

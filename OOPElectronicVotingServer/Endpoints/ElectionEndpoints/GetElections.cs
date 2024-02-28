@@ -1,5 +1,5 @@
+using OOPElectronicVotingServer.Contracts.ElectionContracts;
 using OOPElectronicVotingServer.Database;
-using OOPElectronicVotingServer.Endpoints.ElectionEndpoints.Contracts;
 
 namespace OOPElectronicVotingServer.Endpoints.ElectionEndpoints;
 
@@ -13,6 +13,7 @@ public static class GetElections
             .Select(databaseElection => new GetElectionsResponse
             {
                 ElectionId = databaseElection.ElectionId,
+                Name = databaseElection.Name,
                 StartTime = databaseElection.StartTime,
                 EndTime = databaseElection.EndTime,
                 Candidates = database.Candidates.Where(

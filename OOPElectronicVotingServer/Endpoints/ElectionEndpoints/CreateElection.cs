@@ -13,6 +13,7 @@ public static class CreateElection
         Election election = new()
         {
             ElectionId = Guid.NewGuid(),
+            Name = createRequest.Name,
             StartTime = createRequest.StartTime,
             EndTime = createRequest.EndTime,
             CandidateIds = createRequest.CandidateIds
