@@ -1,4 +1,4 @@
-namespace OOPElectronicVotingServer.Contracts.ElectionContracts;
+namespace OOPElectronicVotingServer.Endpoints.Contracts.ElectionContracts;
 
 public class CreateElectionRequest
 {

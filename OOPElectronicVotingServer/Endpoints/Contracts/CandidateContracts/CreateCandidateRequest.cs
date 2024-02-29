@@ -1,4 +1,4 @@
-namespace OOPElectronicVotingServer.Contracts.CandidateContracts;
+namespace OOPElectronicVotingServer.Endpoints.Contracts.CandidateContracts;
 
 public class CreateCandidateRequest
 {
