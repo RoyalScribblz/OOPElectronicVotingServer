@@ -7,5 +7,7 @@ public interface IElectionService
 {
     Task<Election?> CreateElection(CreateElectionRequest createRequest, CancellationToken cancellationToken);
     
-    IEnumerable<GetElectionsResponse> GetElections();
+    IEnumerable<GetElectionResponse> GetElections();
+
+    GetElectionResponse? GetElection(Guid electionId);
 }

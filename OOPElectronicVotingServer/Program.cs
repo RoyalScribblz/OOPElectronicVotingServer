@@ -21,7 +21,10 @@ builder.Services.AddCors(options =>
     });
 });
 
-builder.Services.AddSingleton<IElectionService, ElectionService>();
+builder.Services.AddScoped<IBallotService, BallotService>();
+builder.Services.AddScoped<ICandidateService, CandidateService>();
+builder.Services.AddScoped<IElectionService, ElectionService>();
+builder.Services.AddScoped<IVoterService, VoterService>();
 
 WebApplication app = builder.Build();
 

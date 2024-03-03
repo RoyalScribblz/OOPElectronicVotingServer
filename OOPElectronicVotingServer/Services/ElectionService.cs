@@ -1,5 +1,6 @@
 using OOPElectronicVotingServer.Database;
 using OOPElectronicVotingServer.Database.Dtos;
+using OOPElectronicVotingServer.Endpoints.Contracts.CandidateContracts;
 using OOPElectronicVotingServer.Endpoints.Contracts.ElectionContracts;
 using OOPElectronicVotingServer.Services.Abstractions;
 
@@ -32,26 +33,56 @@ public class ElectionService(VotingDatabase database) : IElectionService
         return election;
     }
     
-    public IEnumerable<GetElectionsResponse> GetElections()
+    public IEnumerable<GetElectionResponse> GetElections() => database.Elections
+        .Select(election => new GetElectionResponse
+        {
+            ElectionId = election.ElectionId,
+
+            Name = election.Name,
+
+            StartTime = election.StartTime,
+
+            EndTime = election.EndTime,
+
+            Candidates = database.Candidates
+                .Select(candidate => new CandidateWithVoteCount
+                {
+                    CandidateId = candidate.CandidateId,
+                    Name = candidate.Name,
+                    ImageUrl = candidate.ImageUrl,
+                    Colour = candidate.Colour,
+                    VoteCount = election.EndTime < DateTime.Now
+                        ? database.Ballots.Count(ballot => ballot.ElectionId == election.ElectionId 
+                                                           && ballot.CandidateId == candidate.CandidateId)
+                        : 0
+                })
+                .Where(candidate => election.CandidateIds.Contains(candidate.CandidateId))
+                .ToList()
+        }).ToList();
+
+    public GetElectionResponse? GetElection(Guid electionId) => database.Elections.Select(election => new GetElectionResponse
     {
-        return database.Elections
-            .Select(databaseElection => new GetElectionsResponse
+        ElectionId = election.ElectionId,
+
+        Name = election.Name,
+
+        StartTime = election.StartTime,
+
+        EndTime = election.EndTime,
+
+        Candidates = database.Candidates
+            .Select(candidate => new CandidateWithVoteCount
             {
-                ElectionId = databaseElection.ElectionId,
-                
-                Name = databaseElection.Name,
-                
-                StartTime = databaseElection.StartTime,
-                
-                EndTime = databaseElection.EndTime,
-                
-                Candidates = database.Candidates
-                    .Where(candidate => databaseElection.CandidateIds
-                    .Contains(candidate.CandidateId))
-                    .ToList(),
-                
-                VoteCount = database.Ballots
-                    .Count(ballot => ballot.ElectionId == databaseElection.ElectionId)
-            }).ToList();
-    }
+                CandidateId = candidate.CandidateId,
+                Name = candidate.Name,
+                ImageUrl = candidate.ImageUrl,
+                Colour = candidate.Colour,
+                VoteCount = election.EndTime < DateTime.Now
+                    ? database.Ballots.Count(ballot => ballot.ElectionId == election.ElectionId 
+                                                       && ballot.CandidateId == candidate.CandidateId)
+                    : 0
+            })
+            .Where(candidate => election.CandidateIds.Contains(candidate.CandidateId))
+            .ToList()
+    }).SingleOrDefault(election => election.ElectionId == electionId);
 }

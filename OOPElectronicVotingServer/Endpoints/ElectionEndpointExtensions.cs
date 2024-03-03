@@ -14,11 +14,20 @@ public static class ElectionEndpointExtensions
 
             return election == null
                 ? Results.BadRequest()
-                : TypedResults.Created("/elections", election);
+                : TypedResults.Created($"/election/{election.ElectionId}", election);
         });
 
         app.MapGet("/elections", (IElectionService electionService) =>
             TypedResults.Ok(electionService.GetElections()));
+
+        app.MapGet("/election/{electionId:guid}", (IElectionService electionService, Guid electionId) =>
+        {
+            GetElectionResponse? election = electionService.GetElection(electionId);
+
+            return election == null
+                ? Results.NotFound()
+                : TypedResults.Ok(election);
+        });
 
         return app;
     }  

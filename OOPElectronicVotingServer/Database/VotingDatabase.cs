@@ -19,4 +19,6 @@ public class VotingDatabase : DbContext
     public required DbSet<Election> Elections { get; init; }
 
     public required DbSet<Ballot> Ballots { get; init; }
+    
+    public required DbSet<QrCode> QrCodes { get; init; }
 }

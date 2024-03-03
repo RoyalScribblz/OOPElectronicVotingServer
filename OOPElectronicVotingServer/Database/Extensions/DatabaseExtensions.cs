@@ -36,7 +36,7 @@ public static class DatabaseExtensions
                 
         await database.Elections.AddAsync(new Election
         {
-            ElectionId = Guid.NewGuid(),
+            ElectionId = Guid.Parse("dc6703e2-589d-42bb-aaa6-30cc09d27822"),
             Name = "Really Cool Election",
             StartTime = DateTime.Now.AddDays(-1),
             EndTime = DateTime.Now.AddDays(1),
@@ -91,6 +91,28 @@ public static class DatabaseExtensions
             CandidateIds = [idA, idE, idF]
                 
         });
+
+        await database.QrCodes.AddRangeAsync([
+            new QrCode
+            {
+                QrCodeId = "voteWithQR|B8SX9Pem6cuYitrFzKunXcB23Sk3xbtTB3nSzx5bjqpTSmQ5Cre42xjSzjvrYaRF"
+            },
+            new QrCode
+            {
+                QrCodeId = "voteWithQR|p3RNi7ckhSkc59KvuLedwxACL2v4W7B2gS0pVQ7HgeBAYE8a8gpZWLQhVFuf5C3h"
+            },
+            new QrCode
+            {
+                QrCodeId = "voteWithQR|u7Q4RM3MKfHtAwKN9TXZGETXFaf1ApYEFc45B6MkknivKRnr0p5ex9PChG13U06X"
+            },
+            new QrCode
+            {
+                QrCodeId = "voteWithQR|5qaccjKGcecjkfMtWMEZKddQNccSySrK7eHP2x5izTuBLM7iN5Sby0AJzewUMQYy"
+            },new QrCode
+            {
+                QrCodeId = "voteWithQR|DVv3B2Lb2DhKaCUhCzX76wdS449XcAZpFjzgvy9mEk40YfgfRwaFKQyqBY80uVXB"
+            }
+        ]);
         
         await database.SaveChangesAsync();
     }
