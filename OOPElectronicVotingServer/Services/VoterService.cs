@@ -5,7 +5,7 @@ using OOPElectronicVotingServer.Services.Abstractions;
 
 namespace OOPElectronicVotingServer.Services;
 
-public class VoterService(VotingDatabase database) : IVoterService
+public sealed class VoterService(VotingDatabase database) : IVoterService
 {
     public async Task<Voter?> CreateVoter(Voter voter, CancellationToken cancellationToken)
     {
