@@ -13,7 +13,7 @@ public sealed class BallotService(VotingDatabase database) : IBallotService
         {
             BallotId = Guid.NewGuid(),
             ElectionId = createRequest.ElectionId,
-            VoterId = createRequest.VoterId,
+            UserId = createRequest.UserId,
             CandidateId = createRequest.CandidateId
         };
 

@@ -12,7 +12,7 @@ public class VotingDatabase : DbContext
         optionsBuilder.UseInMemoryDatabase("TestDb");
     }
 
-    public required DbSet<Voter> Voters { get; init; }
+    public required DbSet<User> Users { get; init; }
     
     public required DbSet<Candidate> Candidates { get; init; }
     
