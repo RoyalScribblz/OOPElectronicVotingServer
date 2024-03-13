@@ -18,6 +18,6 @@ public sealed record User
 
 public enum UserType
 {
-    Voter,
-    Admin
+    Voter = 0,
+    Admin = 1
 }
