@@ -1,6 +1,6 @@
-namespace OOPElectronicVotingServer.Database.Dtos;
+namespace OOPElectronicVotingServer.Endpoints.Contracts.UserContracts;
 
-public sealed record User
+public sealed class CreateUserRequest
 {
     public required string UserId { get; set; }
     public required string NationalId { get; set; }
@@ -13,5 +13,4 @@ public sealed record User
     public required string Country { get; set; }
     public required string Email { get; set; }
     public required string PhoneNumber { get; set; }
-    public required UserType Type { get; set; }
 }

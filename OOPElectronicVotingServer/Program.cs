@@ -2,7 +2,10 @@ using OOPElectronicVotingServer.Database;
 using OOPElectronicVotingServer.Database.Extensions;
 using OOPElectronicVotingServer.Endpoints;
 using OOPElectronicVotingServer.Services;
-using OOPElectronicVotingServer.Services.Abstractions;
+using OOPElectronicVotingServer.Services.BallotService;
+using OOPElectronicVotingServer.Services.CandidateService;
+using OOPElectronicVotingServer.Services.ElectionService;
+using OOPElectronicVotingServer.Services.UserService;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 

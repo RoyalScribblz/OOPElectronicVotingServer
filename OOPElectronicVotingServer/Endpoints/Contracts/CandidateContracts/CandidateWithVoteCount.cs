@@ -1,6 +1,6 @@
 namespace OOPElectronicVotingServer.Endpoints.Contracts.CandidateContracts;
 
-public class CandidateWithVoteCount
+public sealed class CandidateWithVoteCount
 {
     public required Guid CandidateId { get; set; }
     public required string Name { get; set; }

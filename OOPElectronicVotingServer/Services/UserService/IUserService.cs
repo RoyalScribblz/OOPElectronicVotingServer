@@ -1,10 +1,12 @@
 using OOPElectronicVotingServer.Database.Dtos;
 
-namespace OOPElectronicVotingServer.Services.Abstractions;
+namespace OOPElectronicVotingServer.Services.UserService;
 
 public interface IUserService
 {
     Task<User?> CreateUser(User user, CancellationToken cancellationToken);
 
     Task<User?> GetUser(string userId, CancellationToken cancellationToken);
+
+    Task<bool> IsEmpty();
 }

@@ -1,9 +1,8 @@
 using OOPElectronicVotingServer.Database;
 using OOPElectronicVotingServer.Database.Dtos;
 using OOPElectronicVotingServer.Endpoints.Contracts.BallotContracts;
-using OOPElectronicVotingServer.Services.Abstractions;
 
-namespace OOPElectronicVotingServer.Services;
+namespace OOPElectronicVotingServer.Services.BallotService;
 
 public sealed class BallotService(VotingDatabase database) : IBallotService
 {

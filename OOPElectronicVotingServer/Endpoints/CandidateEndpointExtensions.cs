@@ -1,6 +1,6 @@
 using OOPElectronicVotingServer.Database.Dtos;
 using OOPElectronicVotingServer.Endpoints.Contracts.CandidateContracts;
-using OOPElectronicVotingServer.Services.Abstractions;
+using OOPElectronicVotingServer.Services.CandidateService;
 
 namespace OOPElectronicVotingServer.Endpoints;
 

@@ -2,7 +2,7 @@ using OOPElectronicVotingServer.Endpoints.Contracts.CandidateContracts;
 
 namespace OOPElectronicVotingServer.Endpoints.Contracts.ElectionContracts;
 
-public class GetElectionResponse
+public sealed class GetElectionResponse
 {
     public required Guid ElectionId { get; set; }
     public required string Name { get; set; }

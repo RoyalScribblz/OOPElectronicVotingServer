@@ -1,7 +1,7 @@
 using OOPElectronicVotingServer.Database.Dtos;
 using OOPElectronicVotingServer.Endpoints.Contracts.BallotContracts;
 
-namespace OOPElectronicVotingServer.Services.Abstractions;
+namespace OOPElectronicVotingServer.Services.BallotService;
 
 public interface IBallotService
 {

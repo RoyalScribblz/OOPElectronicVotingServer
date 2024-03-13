@@ -1,6 +1,6 @@
 namespace OOPElectronicVotingServer.Endpoints.Contracts.ElectionContracts;
 
-public class CreateElectionRequest
+public sealed class CreateElectionRequest
 {
     public required string Name { get; set; }
     public required DateTime StartTime { get; set; }

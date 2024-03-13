@@ -1,7 +1,7 @@
 using OOPElectronicVotingServer.Database.Dtos;
 using OOPElectronicVotingServer.Endpoints.Contracts.ElectionContracts;
 
-namespace OOPElectronicVotingServer.Services.Abstractions;
+namespace OOPElectronicVotingServer.Services.ElectionService;
 
 public interface IElectionService
 {

@@ -1,9 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using OOPElectronicVotingServer.Database;
 using OOPElectronicVotingServer.Database.Dtos;
-using OOPElectronicVotingServer.Services.Abstractions;
 
-namespace OOPElectronicVotingServer.Services;
+namespace OOPElectronicVotingServer.Services.UserService;
 
 public sealed class UserService(VotingDatabase database) : IUserService
 {
@@ -25,4 +24,6 @@ public sealed class UserService(VotingDatabase database) : IUserService
 
     public async Task<User?> GetUser(string userId, CancellationToken cancellationToken) =>
         await database.Users.FirstOrDefaultAsync(user => user.UserId == userId, cancellationToken: cancellationToken);
+
+    public async Task<bool> IsEmpty() => !await database.Users.AnyAsync();
 }

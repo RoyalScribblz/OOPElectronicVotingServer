@@ -2,9 +2,8 @@ using OOPElectronicVotingServer.Database;
 using OOPElectronicVotingServer.Database.Dtos;
 using OOPElectronicVotingServer.Endpoints.Contracts.CandidateContracts;
 using OOPElectronicVotingServer.Endpoints.Contracts.ElectionContracts;
-using OOPElectronicVotingServer.Services.Abstractions;
 
-namespace OOPElectronicVotingServer.Services;
+namespace OOPElectronicVotingServer.Services.ElectionService;
 
 public sealed class ElectionService(VotingDatabase database) : IElectionService
 {
