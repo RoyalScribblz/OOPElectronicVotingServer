@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using OOPElectronicVotingServer.Database.Dtos;
 using OOPElectronicVotingServer.Endpoints.Contracts.UserContracts;
 using OOPElectronicVotingServer.Services.UserService;
@@ -8,7 +9,7 @@ public static class UserEndpointExtensions
 {
     public static WebApplication MapUserEndpoints(this WebApplication app)
     {
-        app.MapPost("/user", async (CreateUserRequest createRequest, IUserService userService, CancellationToken cancellationToken) =>
+        app.MapPost("/user", [Authorize] async (CreateUserRequest createRequest, IUserService userService, CancellationToken cancellationToken) =>
         {
             User user = new User
             {
@@ -31,7 +32,7 @@ public static class UserEndpointExtensions
                 : TypedResults.Created($"/user/{user.UserId}");
         });
 
-        app.MapGet("/user/{userId}", async (string userId, IUserService userService, CancellationToken cancellationToken) =>
+        app.MapGet("/user/{userId}", [Authorize] async (string userId, IUserService userService, CancellationToken cancellationToken) =>
         {
             User? user = await userService.GetUser(userId, cancellationToken);
 
