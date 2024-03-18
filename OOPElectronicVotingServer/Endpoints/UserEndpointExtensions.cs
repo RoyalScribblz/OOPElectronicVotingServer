@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using OOPElectronicVotingServer.Database.Dtos;
 using OOPElectronicVotingServer.Endpoints.Contracts.UserContracts;
@@ -9,11 +10,19 @@ public static class UserEndpointExtensions
 {
     public static WebApplication MapUserEndpoints(this WebApplication app)
     {
-        app.MapPost("/user", [Authorize] async (CreateUserRequest createRequest, IUserService userService, CancellationToken cancellationToken) =>
+        app.MapPost("/user", [Authorize] async (CreateUserRequest createRequest, IUserService userService, HttpContext context, CancellationToken cancellationToken) =>
         {
+            string? userId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            string? email = context.User.FindFirst(ClaimTypes.Email)?.Value;
+
+            if (userId == null || email == null)
+            {
+                return TypedResults.Unauthorized();
+            }
+            
             User user = new User
             {
-                UserId = createRequest.UserId,
+                UserId = userId,
                 NationalId = createRequest.NationalId,
                 FirstName = createRequest.FirstName,
                 LastName = createRequest.LastName,
@@ -22,14 +31,14 @@ public static class UserEndpointExtensions
                 Address = createRequest.Address,
                 Postcode = createRequest.Postcode,
                 Country = createRequest.Country,
-                Email = createRequest.Email,
+                Email = email,
                 PhoneNumber = createRequest.PhoneNumber,
                 Type = await userService.IsEmpty() ? UserType.Admin : UserType.Voter  // first user to sign up is admin
             };
             
             return await userService.CreateUser(user, cancellationToken) == null
                 ? Results.BadRequest()
-                : TypedResults.Created($"/user/{user.UserId}");
+                : TypedResults.Created($"/user/{user.UserId}", user);
         });
 
         app.MapGet("/user/{userId}", [Authorize] async (string userId, IUserService userService, CancellationToken cancellationToken) =>
