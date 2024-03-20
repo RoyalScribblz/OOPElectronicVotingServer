@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using OOPElectronicVotingServer.Database.Dtos;
 using OOPElectronicVotingServer.Endpoints.Contracts.ElectionContracts;
 using OOPElectronicVotingServer.Services.ElectionService;
@@ -8,7 +9,7 @@ public static class ElectionEndpointExtensions
 {
     public static WebApplication MapElectionEndpoints(this WebApplication app)
     {
-        app.MapPost("/election", async (CreateElectionRequest createRequest, IElectionService electionService, CancellationToken cancellationToken) =>
+        app.MapPost("/election", [Authorize] async (CreateElectionRequest createRequest, IElectionService electionService, CancellationToken cancellationToken) =>
         {
             Election? election = await electionService.CreateElection(createRequest, cancellationToken);
 
