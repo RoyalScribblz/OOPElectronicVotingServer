@@ -13,14 +13,13 @@ public static class UserEndpointExtensions
         app.MapPost("/user", [Authorize] async (CreateUserRequest createRequest, IUserService userService, HttpContext context, CancellationToken cancellationToken) =>
         {
             string? userId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            string? email = context.User.FindFirst(ClaimTypes.Email)?.Value;
 
-            if (userId == null || email == null)
+            if (userId == null)
             {
                 return TypedResults.Unauthorized();
             }
             
-            User user = new User
+            User user = new()
             {
                 UserId = userId,
                 NationalId = createRequest.NationalId,
@@ -31,7 +30,7 @@ public static class UserEndpointExtensions
                 Address = createRequest.Address,
                 Postcode = createRequest.Postcode,
                 Country = createRequest.Country,
-                Email = email,
+                Email = createRequest.Email,
                 PhoneNumber = createRequest.PhoneNumber,
                 Type = await userService.IsEmpty() ? UserType.Admin : UserType.Voter  // first user to sign up is admin
             };
