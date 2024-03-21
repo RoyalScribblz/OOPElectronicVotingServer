@@ -33,8 +33,7 @@ public static class UserEndpointExtensions
                 Postcode = createRequest.Postcode,
                 Country = createRequest.Country,
                 Email = email,
-                PhoneNumber = createRequest.PhoneNumber,
-                Type = await userService.IsEmpty() ? UserType.Admin : UserType.Voter  // first user to sign up is admin
+                PhoneNumber = createRequest.PhoneNumber
             };
             
             return await userService.CreateUser(user, cancellationToken) == null
