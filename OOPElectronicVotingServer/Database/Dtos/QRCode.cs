@@ -1,7 +1,7 @@
 namespace OOPElectronicVotingServer.Database.Dtos;
 
-public class QrCode
+public sealed record QrCode
 {
-    public required string QrCodeId { get; set; }
-    public required Guid ElectionId { get; set; }
+    public required string QrCodeId { get; init; }
+    public required Guid ElectionId { get; init; }
 }

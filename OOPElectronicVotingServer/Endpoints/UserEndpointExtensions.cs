@@ -1,5 +1,5 @@
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using OOPElectronicVotingServer.Database.Dtos;
 using OOPElectronicVotingServer.Endpoints.Contracts.UserContracts;
 using OOPElectronicVotingServer.Extensions;
@@ -11,7 +11,11 @@ public static class UserEndpointExtensions
 {
     public static WebApplication MapUserEndpoints(this WebApplication app)
     {
-        app.MapPost("/user", [Authorize] async (CreateUserRequest createRequest, IUserService userService, HttpContext context, CancellationToken cancellationToken) =>
+        app.MapPost("/user", async Task<Results<UnauthorizedHttpResult, BadRequest, Created<User>>> (
+            CreateUserRequest createRequest,
+            IUserService userService,
+            HttpContext context,
+            CancellationToken cancellationToken) =>
         {
             string? userId = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             string? email = context.User.FindFirst(ClaimTypes.Email)?.Value;
@@ -37,18 +41,25 @@ public static class UserEndpointExtensions
             };
             
             return await userService.CreateUser(user, cancellationToken) == null
-                ? Results.BadRequest()
+                ? TypedResults.BadRequest()
                 : TypedResults.Created($"/user/{user.UserId}", user);
-        });
+        }).RequireAuthorization().WithTags("User");
 
-        app.MapGet("/user/{userId}", [Authorize] async (string userId, IUserService userService, HttpContext context, CancellationToken cancellationToken) =>
+        app.MapGet("/user/{userId}", async Task<Results<UnauthorizedHttpResult, NotFound, Ok<User>>> (
+            string userId,
+            IUserService userService,
+            HttpContext context,
+            CancellationToken cancellationToken) =>
         {
-            var x = context.User.IsAdmin();
+            if (context.User.IsAdmin() == false && userId != context.User.Identity?.Name)
+            {
+                return TypedResults.Unauthorized();
+            }
             
             User? user = await userService.GetUser(userId, cancellationToken);
 
-            return user == null ? Results.NotFound() : TypedResults.Ok(user);
-        });
+            return user == null ? TypedResults.NotFound() : TypedResults.Ok(user);
+        }).RequireAuthorization().WithTags("User");
 
         return app;
     }  

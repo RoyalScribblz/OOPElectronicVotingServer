@@ -30,6 +30,6 @@ public sealed class BallotService(VotingDatabase database) : IBallotService
         return ballot;
     }
 
-    public IEnumerable<Ballot> GetBallots(Guid electionId, CancellationToken cancellationToken) =>
+    public IEnumerable<Ballot> GetBallots(Guid electionId) =>
         database.Ballots.Where(ballot => ballot.ElectionId == electionId);
 }

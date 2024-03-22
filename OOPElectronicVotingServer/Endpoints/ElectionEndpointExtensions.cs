@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using OOPElectronicVotingServer.Database.Dtos;
 using OOPElectronicVotingServer.Endpoints.Contracts.ElectionContracts;
 using OOPElectronicVotingServer.Services.ElectionService;
@@ -9,26 +9,31 @@ public static class ElectionEndpointExtensions
 {
     public static WebApplication MapElectionEndpoints(this WebApplication app)
     {
-        app.MapPost("/election", [Authorize] async (CreateElectionRequest createRequest, IElectionService electionService, CancellationToken cancellationToken) =>
+        app.MapPost("/election", async Task<Results<BadRequest, Created<Election>>> (
+            CreateElectionRequest createRequest,
+            IElectionService electionService,
+            CancellationToken cancellationToken) =>
         {
             Election? election = await electionService.CreateElection(createRequest, cancellationToken);
 
             return election == null
-                ? Results.BadRequest()
+                ? TypedResults.BadRequest()
                 : TypedResults.Created($"/election/{election.ElectionId}", election);
-        });
+        }).RequireAuthorization().WithTags("Election");
 
         app.MapGet("/elections", (IElectionService electionService) =>
-            TypedResults.Ok(electionService.GetElections()));
+            TypedResults.Ok(electionService.GetElections())).WithTags("Election");
 
-        app.MapGet("/election/{electionId:guid}", (IElectionService electionService, Guid electionId) =>
+        app.MapGet("/election/{electionId:guid}", Results<NotFound, Ok<GetElectionResponse>> (
+            IElectionService electionService,
+            Guid electionId) =>
         {
             GetElectionResponse? election = electionService.GetElection(electionId);
 
             return election == null
-                ? Results.NotFound()
+                ? TypedResults.NotFound()
                 : TypedResults.Ok(election);
-        });
+        }).WithTags("Election");
 
         return app;
     }  

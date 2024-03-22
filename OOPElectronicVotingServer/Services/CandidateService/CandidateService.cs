@@ -6,7 +6,9 @@ namespace OOPElectronicVotingServer.Services.CandidateService;
 
 public sealed class CandidateService(VotingDatabase database) : ICandidateService
 {
-    public async Task<Candidate?> CreateCandidate(CreateCandidateRequest createRequest, CancellationToken cancellationToken)
+    public async Task<Candidate?> CreateCandidate(
+        CreateCandidateRequest createRequest,
+        CancellationToken cancellationToken)
     {
         Candidate candidate = new()
         {

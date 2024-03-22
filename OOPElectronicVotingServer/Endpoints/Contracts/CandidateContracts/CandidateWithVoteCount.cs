@@ -1,10 +1,9 @@
+using OOPElectronicVotingServer.Models;
+
 namespace OOPElectronicVotingServer.Endpoints.Contracts.CandidateContracts;
 
-public sealed class CandidateWithVoteCount
+public sealed record CandidateWithVoteCount : CandidateBase
 {
-    public required Guid CandidateId { get; set; }
-    public required string Name { get; set; }
-    public required string ImageUrl { get; set; }
-    public required string Colour { get; set; }
-    public required int VoteCount { get; set; }
+    public required Guid CandidateId { get; init; }
+    public required int VoteCount { get; init; }
 }

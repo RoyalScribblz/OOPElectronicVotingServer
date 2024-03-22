@@ -1,9 +1,8 @@
+using OOPElectronicVotingServer.Models;
+
 namespace OOPElectronicVotingServer.Database.Dtos;
 
-public sealed class Ballot
+public sealed record Ballot : BallotBase
 {
-    public required Guid BallotId { set; get; }
-    public required Guid ElectionId { set; get; }
-    public required string UserId { set; get; }
-    public required Guid CandidateId { set; get; }
+    public required Guid BallotId { get; init; }
 }

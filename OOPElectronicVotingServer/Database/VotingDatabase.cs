@@ -3,7 +3,7 @@ using OOPElectronicVotingServer.Database.Dtos;
 
 namespace OOPElectronicVotingServer.Database;
 
-public class VotingDatabase : DbContext
+public sealed class VotingDatabase : DbContext
 {
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

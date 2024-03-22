@@ -2,11 +2,11 @@ using OOPElectronicVotingServer.Endpoints.Contracts.CandidateContracts;
 
 namespace OOPElectronicVotingServer.Endpoints.Contracts.ElectionContracts;
 
-public sealed class GetElectionResponse
+public sealed record GetElectionResponse
 {
-    public required Guid ElectionId { get; set; }
-    public required string Name { get; set; }
-    public required DateTime StartTime { get; set; }
-    public required DateTime EndTime { get; set; }
-    public required List<CandidateWithVoteCount> Candidates { get; set; }
+    public required Guid ElectionId { get; init; }
+    public required string Name { get; init; }
+    public required DateTime StartTime { get; init; }
+    public required DateTime EndTime { get; init; }
+    public required IEnumerable<CandidateWithVoteCount> Candidates { get; init; }
 }
