@@ -1,4 +1,4 @@
-namespace OOPElectronicVotingServer.Models;
+namespace OOPElectronicVotingServer.BaseModels;
 
 public abstract record BallotBase
 {

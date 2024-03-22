@@ -1,4 +1,4 @@
-using OOPElectronicVotingServer.Models;
+using OOPElectronicVotingServer.BaseModels;
 
 namespace OOPElectronicVotingServer.Endpoints.Contracts.UserContracts;
 
