@@ -66,3 +66,5 @@ await app.Services.CreateScope().ServiceProvider
                   .Seed();
 
 app.Run();
+
+public partial class Program;

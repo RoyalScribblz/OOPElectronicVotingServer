@@ -19,4 +19,8 @@
       <Compile Remove="Services\Abstractions\IAdminService.cs" />
     </ItemGroup>
 
+    <ItemGroup>
+        <InternalsVisibleTo Include="OOPElectronicVotingServer.ComponentTests" />
+    </ItemGroup>
+
 </Project>
