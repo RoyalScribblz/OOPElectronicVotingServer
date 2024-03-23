@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using OOPElectronicVotingServer.Database.Dtos;
 using OOPElectronicVotingServer.Endpoints.Contracts.ElectionContracts;
+using OOPElectronicVotingServer.Extensions;
 using OOPElectronicVotingServer.Services.ElectionService;
 
 namespace OOPElectronicVotingServer.Endpoints;
@@ -9,11 +10,17 @@ public static class ElectionEndpointExtensions
 {
     public static WebApplication MapElectionEndpoints(this WebApplication app)
     {
-        app.MapPost("/election", async Task<Results<BadRequest, Created<Election>>> (
+        app.MapPost("/election", async Task<Results<UnauthorizedHttpResult, BadRequest, Created<Election>>> (
             CreateElectionRequest createRequest,
             IElectionService electionService,
+            HttpContext context,
             CancellationToken cancellationToken) =>
         {
+            if (context.User.IsAdmin() == false)
+            {
+                return TypedResults.Unauthorized();
+            }
+            
             Election? election = await electionService.CreateElection(createRequest, cancellationToken);
 
             return election == null
