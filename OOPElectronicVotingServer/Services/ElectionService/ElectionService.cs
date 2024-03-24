@@ -86,7 +86,7 @@ public sealed class ElectionService(VotingDatabase database) : IElectionService
                                                            && ballot.CandidateId == candidate.CandidateId)
                         : 0
                 })
-                .Where(candidate => election.CandidateIds.Contains(candidate.CandidateId))
+                .Where(candidate => election.CandidateIds.Contains(candidate.CandidateId)).ToList()
         }).SingleOrDefault(election => election.ElectionId == electionId);
     }
 }

@@ -19,42 +19,42 @@ public static class DatabaseExtensions
             {
                 CandidateId = idA,
                 Name = "Candidate A",
-                ImageUrl = string.Empty,
+                ImageUrl = "https://images.pexels.com/photos/417074/pexels-photo-417074.jpeg",
                 Colour = "2176ff"
             },
             new Candidate
             {
                 CandidateId = idB,
                 Name = "Candidate B",
-                ImageUrl = string.Empty,
+                ImageUrl = "https://images.pexels.com/photos/1624438/pexels-photo-1624438.jpeg",
                 Colour = "ff21cf"
             },
             new Candidate
             {
                 CandidateId = idC,
                 Name = "Candidate C",
-                ImageUrl = string.Empty,
+                ImageUrl = "https://images.pexels.com/photos/1028225/pexels-photo-1028225.jpeg",
                 Colour = "ff2121"
             },
             new Candidate
             {
                 CandidateId = idD,
                 Name = "Candidate D",
-                ImageUrl = string.Empty,
+                ImageUrl = "https://images.pexels.com/photos/2832046/pexels-photo-2832046.jpeg",
                 Colour = "21ff25"
             },
             new Candidate
             {
                 CandidateId = idE,
                 Name = "Candidate E",
-                ImageUrl = string.Empty,
+                ImageUrl = "https://images.pexels.com/photos/206648/pexels-photo-206648.jpeg",
                 Colour = "c2fa19"
             },
             new Candidate
             {
                 CandidateId = idF,
                 Name = "Candidate F",
-                ImageUrl = string.Empty,
+                ImageUrl = "https://images.pexels.com/photos/790916/pexels-photo-790916.jpeg",
                 Colour = "fa5c19"
             }
         ]);

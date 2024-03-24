@@ -7,6 +7,7 @@ using OOPElectronicVotingServer.Extensions;
 using OOPElectronicVotingServer.Services.BallotService;
 using OOPElectronicVotingServer.Services.CandidateService;
 using OOPElectronicVotingServer.Services.ElectionService;
+using OOPElectronicVotingServer.Services.QrCodeService;
 using OOPElectronicVotingServer.Services.UserService;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -41,7 +42,8 @@ builder.Services.AddCors(options => options.AddPolicy(name: "LocalDev", policy =
 builder.Services.AddScoped<IBallotService, BallotService>()
                 .AddScoped<ICandidateService, CandidateService>()
                 .AddScoped<IElectionService, ElectionService>()
-                .AddScoped<IUserService, UserService>();
+                .AddScoped<IUserService, UserService>()
+                .AddScoped<IQrCodeService, QrCodeService>();
 
 WebApplication app = builder.Build();
 

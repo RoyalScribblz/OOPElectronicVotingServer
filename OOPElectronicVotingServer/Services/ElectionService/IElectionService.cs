@@ -23,6 +23,6 @@ public interface IElectionService
     /// Get a specific election.
     /// </summary>
     /// <param name="electionId">ID of the election.</param>
-    /// <returns>An elections with vote count on the candidates.</returns>
+    /// <returns>An election with vote count on the candidates.</returns>
     GetElectionResponse? GetElection(Guid electionId);
 }
