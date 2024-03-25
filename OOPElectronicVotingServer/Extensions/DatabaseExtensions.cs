@@ -1,3 +1,4 @@
+using Microsoft.IdentityModel.Tokens;
 using OOPElectronicVotingServer.Database;
 using OOPElectronicVotingServer.Database.Dtos;
 
@@ -7,6 +8,11 @@ public static class DatabaseExtensions
 {
     public static async Task Seed(this VotingDatabase database)
     {
+        if (!database.Candidates.IsNullOrEmpty())
+        {
+            return;
+        }
+        
         Guid idA = Guid.Parse("6ec3dda1-db7e-43cc-b295-a182683d7fb0");
         Guid idB = Guid.Parse("93da166e-1217-470e-8346-b3e871f672ad");
         Guid idC = Guid.Parse("6618f3ef-62f8-4eca-a33d-203c792e67af");
@@ -115,6 +121,38 @@ public static class DatabaseExtensions
                 ElectionId = Guid.Parse("e67f95e0-4250-4c75-8990-44a77fc35f22")
             }
         ]);
+
+        await database.Ballots.AddRangeAsync([
+            new Ballot
+            {
+                ElectionId = Guid.Parse("e67f95e0-4250-4c75-8990-44a77fc35f22"),
+                UserId = "Seeded1",
+                CandidateId = Guid.Parse("6ec3dda1-db7e-43cc-b295-a182683d7fb0"),
+                BallotId = Guid.Parse("776b09da-acbd-4452-9a6f-cdb79338d046")
+            },
+            new Ballot
+            {
+                ElectionId = Guid.Parse("e67f95e0-4250-4c75-8990-44a77fc35f22"),
+                UserId = "Seeded2",
+                CandidateId = Guid.Parse("6ec3dda1-db7e-43cc-b295-a182683d7fb0"),
+                BallotId = Guid.Parse("3bd743e9-3006-4891-9d95-0d96cad3b15d")
+            }
+        ]);
+
+        await database.Users.AddAsync(new User
+        {
+            NationalId = Guid.NewGuid().ToString(),
+            FirstName = Guid.NewGuid().ToString(),
+            LastName = Guid.NewGuid().ToString(),
+            MiddleName = Guid.NewGuid().ToString(),
+            DateOfBirth = DateTime.Now.AddYears(-18),
+            Address = Guid.NewGuid().ToString(),
+            Postcode = Guid.NewGuid().ToString(),
+            Country = Guid.NewGuid().ToString(),
+            PhoneNumber = Guid.NewGuid().ToString(),
+            UserId = "TestAccount",
+            Email = "TestAccount"
+        });
         
         await database.SaveChangesAsync();
     }

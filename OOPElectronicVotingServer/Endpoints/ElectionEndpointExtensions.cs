@@ -31,11 +31,11 @@ public static class ElectionEndpointExtensions
         app.MapGet("/elections", (IElectionService electionService) =>
             TypedResults.Ok(electionService.GetElections())).WithTags("Election");
 
-        app.MapGet("/election/{electionId:guid}", Results<NotFound, Ok<GetElectionResponse>> (
+        app.MapGet("/election/{electionId:guid}", async Task<Results<NotFound, Ok<GetElectionResponse>>> (
             IElectionService electionService,
             Guid electionId) =>
         {
-            GetElectionResponse? election = electionService.GetElection(electionId);
+            GetElectionResponse? election = await electionService.GetElection(electionId);
 
             return election == null
                 ? TypedResults.NotFound()

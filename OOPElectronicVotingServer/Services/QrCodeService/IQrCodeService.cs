@@ -9,5 +9,5 @@ public interface IQrCodeService
     /// </summary>
     /// <param name="qrCodeId">ID of the qr code.</param>
     /// <returns>A qr code or null if it doesn't exist.</returns>
-    QrCode? GetQrCode(string qrCodeId);
+    Task<QrCode?> GetQrCode(string qrCodeId);
 }

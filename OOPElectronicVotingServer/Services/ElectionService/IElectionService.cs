@@ -24,5 +24,5 @@ public interface IElectionService
     /// </summary>
     /// <param name="electionId">ID of the election.</param>
     /// <returns>An election with vote count on the candidates.</returns>
-    GetElectionResponse? GetElection(Guid electionId);
+    Task<GetElectionResponse?> GetElection(Guid electionId);
 }

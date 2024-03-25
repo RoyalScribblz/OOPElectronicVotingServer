@@ -18,4 +18,11 @@ public interface ICandidateService
     /// </summary>
     /// <returns>An IEnumerable of candidates.</returns>
     IEnumerable<Candidate> GetCandidates();
+
+    /// <summary>
+    /// Get a specific candidate.
+    /// </summary>
+    /// <param name="candidateId">ID of the candidate.</param>
+    /// <returns>The candidate or null if it wasn't found.</returns>
+    Task<Candidate?> GetCandidate(Guid candidateId);
 }

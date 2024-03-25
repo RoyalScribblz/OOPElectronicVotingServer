@@ -9,7 +9,7 @@ public sealed class VotingDatabase : DbContext
     {
         base.OnConfiguring(optionsBuilder);
 
-        optionsBuilder.UseInMemoryDatabase("TestDb");
+        optionsBuilder.UseInMemoryDatabase("VotingDb");
     }
 
     public required DbSet<User> Users { get; init; }

@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using OOPElectronicVotingServer.Database;
 using OOPElectronicVotingServer.Database.Dtos;
 using OOPElectronicVotingServer.Endpoints.Contracts.CandidateContracts;
@@ -33,4 +34,7 @@ public sealed class CandidateService(VotingDatabase database) : ICandidateServic
     }
 
     public IEnumerable<Candidate> GetCandidates() => database.Candidates;
+
+    public Task<Candidate?> GetCandidate(Guid candidateId) =>
+        database.Candidates.SingleOrDefaultAsync(candidate => candidate.CandidateId == candidateId);
 }

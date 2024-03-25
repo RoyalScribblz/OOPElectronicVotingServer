@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using OOPElectronicVotingServer.Database;
 using OOPElectronicVotingServer.Database.Dtos;
 using OOPElectronicVotingServer.Endpoints.Contracts.CandidateContracts;
@@ -62,7 +63,7 @@ public sealed class ElectionService(VotingDatabase database) : IElectionService
         }).ToList();
     }
 
-    public GetElectionResponse? GetElection(Guid electionId)
+    public Task<GetElectionResponse?> GetElection(Guid electionId)
     {
         return database.Elections.Select(election => new GetElectionResponse
         {
@@ -87,6 +88,6 @@ public sealed class ElectionService(VotingDatabase database) : IElectionService
                         : 0
                 })
                 .Where(candidate => election.CandidateIds.Contains(candidate.CandidateId)).ToList()
-        }).SingleOrDefault(election => election.ElectionId == electionId);
+        }).SingleOrDefaultAsync(election => election.ElectionId == electionId);
     }
 }

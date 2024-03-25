@@ -11,7 +11,7 @@ public static class UserEndpointExtensions
 {
     public static WebApplication MapUserEndpoints(this WebApplication app)
     {
-        app.MapPost("/user", async Task<Results<UnauthorizedHttpResult, BadRequest, Created<User>>> (
+        app.MapPost("/user", async Task<Results<UnauthorizedHttpResult, BadRequest<string>, BadRequest, Created<User>>> (
             CreateUserRequest createRequest,
             IUserService userService,
             HttpContext context,
@@ -23,6 +23,11 @@ public static class UserEndpointExtensions
             if (userId == null || email == null)
             {
                 return TypedResults.Unauthorized();
+            }
+
+            if (await userService.GetUser(userId, cancellationToken) != null)
+            {
+                return TypedResults.BadRequest("User already exists");
             }
             
             User user = new()

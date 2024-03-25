@@ -22,10 +22,6 @@ public sealed class UserService(VotingDatabase database) : IUserService
         return user;
     }
 
-    public async Task<User?> GetUser(string userId, CancellationToken cancellationToken)
-    {
-        return await database.Users.FirstOrDefaultAsync(
-            user => user.UserId == userId,
-            cancellationToken: cancellationToken);
-    }
+    public Task<User?> GetUser(string userId, CancellationToken cancellationToken) =>
+        database.Users.SingleOrDefaultAsync(user => user.UserId == userId, cancellationToken: cancellationToken);
 }
