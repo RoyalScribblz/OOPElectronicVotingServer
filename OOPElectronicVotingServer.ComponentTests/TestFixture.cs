@@ -10,122 +10,93 @@ using Microsoft.Extensions.Options;
 
 namespace OOPElectronicVotingServer.ComponentTests;
 
-public sealed class VoterApiWebApplicationFactory : WebApplicationFactory<Program>
+public sealed class ApiWebApplicationFactory<THandler> : WebApplicationFactory<Program>
+    where THandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.ConfigureTestServices(services =>
         {
             services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = "Test";
-                options.DefaultChallengeScheme = "Test";
-            })
-            .AddScheme<AuthenticationSchemeOptions, VoterTestAuthHandler>("Test", _ => { });
+                {
+                    options.DefaultAuthenticateScheme = "Test";
+                    options.DefaultChallengeScheme = "Test";
+                })
+                .AddScheme<AuthenticationSchemeOptions, THandler>("Test", _ => { });
         });
     }
 }
 
-public class VoterTestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
+public class VoterAuthHandler(
+    IOptionsMonitor<AuthenticationSchemeOptions> options,
+    ILoggerFactory logger,
+    UrlEncoder encoder)
+    : AuthenticationHandler<AuthenticationSchemeOptions>(options, logger, encoder)
 {
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        return Task.FromResult(AuthenticateResult.Success(new AuthenticationTicket(new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, "TestAccount"), new Claim(ClaimTypes.NameIdentifier, "TestAccount"), new Claim(ClaimTypes.Email, "TestAccount") }, "Test")), "Test")));
-    }
-
-    public VoterTestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock) : base(options, logger, encoder, clock)
-    {
-    }
-
-    public VoterTestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder) : base(options, logger, encoder)
-    {
+        return Task.FromResult(AuthenticateResult.Success(new AuthenticationTicket(
+            new ClaimsPrincipal(new ClaimsIdentity(
+                new[]
+                {
+                    new Claim(ClaimTypes.Name, "TestAccount"), new Claim(ClaimTypes.NameIdentifier, "TestAccount"),
+                    new Claim(ClaimTypes.Email, "TestAccount")
+                }, "Test")), "Test")));
     }
 }
 
-public sealed class AdminApiWebApplicationFactory : WebApplicationFactory<Program>
-{
-    protected override void ConfigureWebHost(IWebHostBuilder builder)
-    {
-        builder.ConfigureTestServices(services =>
-        {
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = "Test";
-                options.DefaultChallengeScheme = "Test";
-            })
-            .AddScheme<AuthenticationSchemeOptions, AdminTestAuthHandler>("Test", _ => { });
-        });
-    }
-}
-
-public class AdminTestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
+public class AdminAuthHandler(
+    IOptionsMonitor<AuthenticationSchemeOptions> options,
+    ILoggerFactory logger,
+    UrlEncoder encoder)
+    : AuthenticationHandler<AuthenticationSchemeOptions>(options,
+        logger, encoder)
 {
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
-        return Task.FromResult(AuthenticateResult.Success(new AuthenticationTicket(new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, "AdminTestAccount"), new Claim(ClaimTypes.NameIdentifier, "AdminTestAccount"), new Claim(ClaimTypes.Email, "AdminTestAccount"), new Claim(ClaimTypes.Role, "Admin") }, "Test")), "Test")));
-    }
-
-    public AdminTestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock) : base(options, logger, encoder, clock)
-    {
-    }
-
-    public AdminTestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder) : base(options, logger, encoder)
-    {
-    }
-}
-
-public sealed class UnauthorisedApiWebApplicationFactory : WebApplicationFactory<Program>
-{
-    protected override void ConfigureWebHost(IWebHostBuilder builder)
-    {
-        builder.ConfigureTestServices(services =>
-        {
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = "Test";
-                options.DefaultChallengeScheme = "Test";
-            })
-            .AddScheme<AuthenticationSchemeOptions, UnauthorisedTestAuthHandler>("Test", _ => { });
-        });
+        return Task.FromResult(AuthenticateResult.Success(new AuthenticationTicket(
+            new ClaimsPrincipal(new ClaimsIdentity(
+                new[]
+                {
+                    new Claim(ClaimTypes.Name, "AdminTestAccount"),
+                    new Claim(ClaimTypes.NameIdentifier, "AdminTestAccount"),
+                    new Claim(ClaimTypes.Email, "AdminTestAccount"), new Claim(ClaimTypes.Role, "Admin")
+                }, "Test")), "Test")));
     }
 }
 
-public class UnauthorisedTestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions>
+public class UnauthorisedHandler(
+    IOptionsMonitor<AuthenticationSchemeOptions> options,
+    ILoggerFactory logger,
+    UrlEncoder encoder)
+    : AuthenticationHandler<AuthenticationSchemeOptions>(options,
+        logger, encoder)
 {
     protected override Task<AuthenticateResult> HandleAuthenticateAsync()
     {
         return Task.FromResult(AuthenticateResult.Fail("Unauthorised"));
     }
-
-    public UnauthorisedTestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock) : base(options, logger, encoder, clock)
-    {
-    }
-
-    public UnauthorisedTestAuthHandler(IOptionsMonitor<AuthenticationSchemeOptions> options, ILoggerFactory logger, UrlEncoder encoder) : base(options, logger, encoder)
-    {
-    }
 }
 
 public sealed class TestFixture : IDisposable
 {
-    // TODO make this nice and OOP
     public HttpClient VoterClient { get; }
     public HttpClient AdminClient { get; }
     public HttpClient UnauthorisedClient { get; }
-    
-    private readonly VoterApiWebApplicationFactory _voterFactory;
-    private readonly AdminApiWebApplicationFactory _adminFactory;
-    private readonly UnauthorisedApiWebApplicationFactory _unauthorisedFactory;
+
+    private readonly ApiWebApplicationFactory<VoterAuthHandler> _voterFactory;
+    private readonly ApiWebApplicationFactory<AdminAuthHandler> _adminFactory;
+    private readonly ApiWebApplicationFactory<UnauthorisedHandler> _unauthorisedFactory;
 
     public TestFixture()
     {
-        _voterFactory = new VoterApiWebApplicationFactory();
+        _voterFactory = new ApiWebApplicationFactory<VoterAuthHandler>();
         VoterClient = _voterFactory.CreateClient();
-        
-        _adminFactory = new AdminApiWebApplicationFactory();
+
+        _adminFactory = new ApiWebApplicationFactory<AdminAuthHandler>();
         AdminClient = _adminFactory.CreateClient();
-        
-        _unauthorisedFactory = new UnauthorisedApiWebApplicationFactory();
+
+        _unauthorisedFactory = new ApiWebApplicationFactory<UnauthorisedHandler>();
         UnauthorisedClient = _unauthorisedFactory.CreateClient();
     }
 
@@ -134,7 +105,7 @@ public sealed class TestFixture : IDisposable
         VoterClient.Dispose();
         AdminClient.Dispose();
         UnauthorisedClient.Dispose();
-        
+
         _voterFactory.Dispose();
         _adminFactory.Dispose();
         _unauthorisedFactory.Dispose();
